@@ -2,7 +2,7 @@ from aoc_02 import run_codes
 
 
 if __name__ == "__main__":
-    with open('aoc_02_input.txt', 'r') as file:
+    with open('./aoc_02_input.txt', 'r') as file:
         data = file.read().replace('\n', '')
         data = data.split(',')
 

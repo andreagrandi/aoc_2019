@@ -103,7 +103,7 @@ def run_codes(codes):
 
 
 if __name__ == "__main__":
-    with open('aoc_02_input.txt', 'r') as file:
+    with open('./aoc_02_input.txt', 'r') as file:
         data = file.read().replace('\n', '')
         codes = data.split(',')
         codes = [int(i) for i in codes]

@@ -30,7 +30,7 @@ def get_required_fuel(mass):
 if __name__ == "__main__":
     total_fuel = 0
 
-    with open('aoc_01_input.txt', 'r') as file:
+    with open('./aoc_01_input.txt', 'r') as file:
         for line in file:
             mass = int(line)
             fuel = get_required_fuel(mass)

@@ -67,7 +67,7 @@ def compute_wires(path_a, path_b):
 if __name__ == "__main__":
     wires = []
 
-    with open('aoc_03_input.txt', 'r') as file:
+    with open('./aoc_03_input.txt', 'r') as file:
         for line in file:
             data = line.replace('\n', '').split(',')
             wires.append(data)
