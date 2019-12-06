@@ -41,3 +41,6 @@ def test_get_nodes():
 def test_get_orbital_transfers():
     n_transfers = get_orbital_transfers(orbits_map, 'YOU', 'SAN')
     assert n_transfers == 4
+
+    n_transfers = get_orbital_transfers(orbits_map, 'YOU', 'H')
+    assert n_transfers == 6
