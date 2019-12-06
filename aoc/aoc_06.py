@@ -1,3 +1,6 @@
+import os
+
+
 def get_total_direct_orbits(orbits_map):
     n_orbits = 0
 
@@ -29,7 +32,6 @@ def get_orbital_transfers(orbits_map, node_a, node_b):
         k = 0
         for n_b in nodes_b:
             if n_a == n_b:
-                print('They meet in: {0}'.format(n_a))
                 return i + k
             k += 1
         i += 1
@@ -37,7 +39,9 @@ def get_orbital_transfers(orbits_map, node_a, node_b):
 
 
 if __name__ == "__main__":
-    with open('./aoc_06_input.txt', 'r') as file:
+    current_dir = os.path.dirname(os.path.realpath(__file__))
+
+    with open(current_dir + '/aoc_06_input.txt', 'r') as file:
         orbits_map = {}
 
         for line in file:
