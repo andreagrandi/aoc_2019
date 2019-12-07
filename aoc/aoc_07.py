@@ -2,9 +2,7 @@ import itertools
 import os
 
 
-def run_codes(codes, interactive_mode=False, inputs=[]):
-    index = 0
-
+def run_codes(codes, interactive_mode=False, inputs=[], index=0):
     while index <= len(codes):
         op = str(codes[index])
 
@@ -44,7 +42,6 @@ def run_codes(codes, interactive_mode=False, inputs=[]):
             if interactive_mode:
                 number = int(input('Enter a number: '))
             else:
-                print('INPUTS: {0}'.format(inputs))
                 number = int(inputs.pop(0))
 
             codes[address] = number
@@ -57,7 +54,7 @@ def run_codes(codes, interactive_mode=False, inputs=[]):
                 print('The number at address {0} is {1}'.format(
                     address, number))
             else:
-                return int(number), True
+                return int(number), True, index + 2
 
             index += 2
         elif op.endswith('5'):
@@ -133,21 +130,20 @@ def run_codes(codes, interactive_mode=False, inputs=[]):
 
             index += 4
         elif op.endswith('99'):
-            print('EXIT CODE!')
-            return None, False
+            return None, False, index
 
 
-def run_amp(codes, setting, input_signal):
+def run_amp(codes, setting, input_signal, index=0):
     if setting is not None and input_signal is not None:
         return run_codes(
             codes, interactive_mode=False, inputs=[setting, input_signal])
 
     if setting:
         return run_codes(
-            codes, interactive_mode=False, inputs=[setting])
+            codes, interactive_mode=False, inputs=[setting], index=index)
     else:
         return run_codes(
-            codes, interactive_mode=False, inputs=[input_signal])
+            codes, interactive_mode=False, inputs=[input_signal], index=index)
 
 
 def find_highest_signal(codes, settings='', configuration={}):
@@ -158,7 +154,7 @@ def find_highest_signal(codes, settings='', configuration={}):
         output = 0
         while next is not None:
             new_codes = [x for x in codes]
-            output, _ = run_amp(new_codes, phase_settings[next], output)
+            output, _, _ = run_amp(new_codes, phase_settings[next], output)
             next = configuration.get(next)
         output_signals.append(output)
     return max(output_signals)
@@ -175,26 +171,29 @@ def find_highest_signal_loop(codes, settings='', configuration={}):
         amp_codes = []
         final_output = 0
 
+        amps_index = {
+            0: 0,
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0
+        }
+
         for i in range(5):
             amp_codes.append([x for x in codes])
 
         while (next is not None) and is_running:
             setting = phase_settings[next]
 
-            print('CURRENT AMP: {0}'.format(next))
-            print('SETTING: {0}'.format(setting))
-
-            # output, is_running = run_amp(amp_codes[next], setting, output)
-
             if setting:
-                if next == 0:  # Amp A
-                    output, is_running = run_amp(amp_codes[next], None, 0)
-                else:
-                    output, is_running = run_amp(
-                        amp_codes[next], setting, None)
+                output, is_running, index = run_amp(
+                    amp_codes[next], setting, output, amps_index[next])
                 phase_settings[next] = None
             else:
-                output, is_running = run_amp(amp_codes[next], None, output)
+                output, is_running, index = run_amp(
+                    amp_codes[next], None, output, amps_index[next])
+
+            amps_index[next] = index
 
             # I check if the code returned an output and we are on AMP E
             if output and next == 4:
@@ -213,9 +212,6 @@ if __name__ == "__main__":
         codes = data.split(',')
         codes = [int(i) for i in codes]
 
-        # 0: Amp A
-        # 1: Amp B
-        # etc...
         configuration = {
             0: 1,
             1: 2,
@@ -226,3 +222,15 @@ if __name__ == "__main__":
         signal = find_highest_signal(
             codes, settings='01234', configuration=configuration)
         print('The highest signal is: {0}'.format(signal))
+
+        configuration = {
+            0: 1,
+            1: 2,
+            2: 3,
+            3: 4,
+            4: 0
+        }
+
+        signal = find_highest_signal_loop(
+            codes, settings='56789', configuration=configuration)
+        print('The highest signal loop is: {0}'.format(signal))
