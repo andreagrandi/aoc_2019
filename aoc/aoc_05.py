@@ -1,3 +1,6 @@
+import os
+
+
 def run_codes(codes):
     index = 0
 
@@ -121,7 +124,9 @@ def run_codes(codes):
 
 
 if __name__ == "__main__":
-    with open('./aoc_05_input.txt', 'r') as file:
+    current_dir = os.path.dirname(os.path.realpath(__file__))
+
+    with open(current_dir + '/inputs/aoc_05_input.txt', 'r') as file:
         data = file.read().replace('\n', '')
         codes = data.split(',')
         codes = [int(i) for i in codes]

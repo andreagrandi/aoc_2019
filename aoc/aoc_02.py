@@ -85,6 +85,7 @@ program, replace position 1 with the value 12 and replace position 2 with
 the value 2.
 What value is left at position 0 after the program halts?
 """
+import os
 
 
 def run_codes(codes):
@@ -103,7 +104,9 @@ def run_codes(codes):
 
 
 if __name__ == "__main__":
-    with open('./aoc_02_input.txt', 'r') as file:
+    current_dir = os.path.dirname(os.path.realpath(__file__))
+
+    with open(current_dir + '/inputs/aoc_02_input.txt', 'r') as file:
         data = file.read().replace('\n', '')
         codes = data.split(',')
         codes = [int(i) for i in codes]

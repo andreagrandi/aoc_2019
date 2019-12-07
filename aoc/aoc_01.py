@@ -21,6 +21,8 @@
 # module (your puzzle input),
 # then add together all the fuel values.
 
+import os
+
 
 def get_required_fuel(mass):
     fuel = (mass // 3) - 2
@@ -30,7 +32,9 @@ def get_required_fuel(mass):
 if __name__ == "__main__":
     total_fuel = 0
 
-    with open('./aoc_01_input.txt', 'r') as file:
+    current_dir = os.path.dirname(os.path.realpath(__file__))
+
+    with open(current_dir + '/inputs/aoc_01_input.txt', 'r') as file:
         for line in file:
             mass = int(line)
             fuel = get_required_fuel(mass)

@@ -207,7 +207,7 @@ def find_highest_signal_loop(codes, settings='', configuration={}):
 if __name__ == "__main__":
     current_dir = os.path.dirname(os.path.realpath(__file__))
 
-    with open(current_dir + '/aoc_07_input.txt', 'r') as file:
+    with open(current_dir + '/inputs/aoc_07_input.txt', 'r') as file:
         data = file.read().replace('\n', '')
         codes = data.split(',')
         codes = [int(i) for i in codes]

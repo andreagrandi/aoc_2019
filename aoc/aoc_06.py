@@ -41,7 +41,7 @@ def get_orbital_transfers(orbits_map, node_a, node_b):
 if __name__ == "__main__":
     current_dir = os.path.dirname(os.path.realpath(__file__))
 
-    with open(current_dir + '/aoc_06_input.txt', 'r') as file:
+    with open(current_dir + '/inputs/aoc_06_input.txt', 'r') as file:
         orbits_map = {}
 
         for line in file:

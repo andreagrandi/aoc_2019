@@ -1,3 +1,6 @@
+import os
+
+
 def get_steps(point, move):
     """
     Given a Point coordinates and a move, it calculates the list of Points
@@ -66,8 +69,9 @@ def compute_wires(path_a, path_b):
 
 if __name__ == "__main__":
     wires = []
+    current_dir = os.path.dirname(os.path.realpath(__file__))
 
-    with open('./aoc_03_input.txt', 'r') as file:
+    with open(current_dir + '/inputs/aoc_03_input.txt', 'r') as file:
         for line in file:
             data = line.replace('\n', '').split(',')
             wires.append(data)
