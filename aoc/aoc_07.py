@@ -2,38 +2,29 @@ import itertools
 import os
 
 
+def get_parameter_value(codes, index, offset, mode):
+    if mode == '0':
+        value = codes[codes[index + offset]]
+    elif mode == '1':
+        value = codes[index + offset]
+
+    return value
+
+
 def run_codes(codes, interactive_mode=False, inputs=[], index=0):
     while index <= len(codes):
         op = str(codes[index])
 
         if op.endswith('1'):
             op = op.zfill(4)
-
-            if op[1] == '0':
-                add_1 = codes[codes[index + 1]]
-            elif op[1] == '1':
-                add_1 = codes[index + 1]
-
-            if op[0] == '0':
-                add_2 = codes[codes[index + 2]]
-            elif op[0] == '1':
-                add_2 = codes[index + 2]
-
+            add_1 = get_parameter_value(codes, index, 1, op[1])
+            add_2 = get_parameter_value(codes, index, 2, op[0])
             codes[codes[index + 3]] = (add_1 + add_2)
             index += 4
         elif op.endswith('2'):
             op = op.zfill(4)
-
-            if op[1] == '0':
-                mul_1 = codes[codes[index + 1]]
-            elif op[1] == '1':
-                mul_1 = codes[index + 1]
-
-            if op[0] == '0':
-                mul_2 = codes[codes[index + 2]]
-            elif op[0] == '1':
-                mul_2 = codes[index + 2]
-
+            mul_1 = get_parameter_value(codes, index, 1, op[1])
+            mul_2 = get_parameter_value(codes, index, 2, op[0])
             codes[codes[index + 3]] = (mul_1 * mul_2)
             index += 4
         elif op.endswith('3'):
@@ -59,16 +50,8 @@ def run_codes(codes, interactive_mode=False, inputs=[], index=0):
             index += 2
         elif op.endswith('5'):
             op = op.zfill(4)
-
-            if op[1] == '0':
-                p1 = codes[codes[index + 1]]
-            elif op[1] == '1':
-                p1 = codes[index + 1]
-
-            if op[0] == '0':
-                p2 = codes[codes[index + 2]]
-            elif op[0] == '1':
-                p2 = codes[index + 2]
+            p1 = get_parameter_value(codes, index, 1, op[1])
+            p2 = get_parameter_value(codes, index, 2, op[0])
 
             if p1 != 0:
                 index = p2
@@ -76,16 +59,8 @@ def run_codes(codes, interactive_mode=False, inputs=[], index=0):
                 index += 3
         elif op.endswith('6'):
             op = op.zfill(4)
-
-            if op[1] == '0':
-                p1 = codes[codes[index + 1]]
-            elif op[1] == '1':
-                p1 = codes[index + 1]
-
-            if op[0] == '0':
-                p2 = codes[codes[index + 2]]
-            elif op[0] == '1':
-                p2 = codes[index + 2]
+            p1 = get_parameter_value(codes, index, 1, op[1])
+            p2 = get_parameter_value(codes, index, 2, op[0])
 
             if p1 == 0:
                 index = p2
@@ -93,16 +68,8 @@ def run_codes(codes, interactive_mode=False, inputs=[], index=0):
                 index += 3
         elif op.endswith('7'):
             op = op.zfill(4)
-
-            if op[1] == '0':
-                p1 = codes[codes[index + 1]]
-            elif op[1] == '1':
-                p1 = codes[index + 1]
-
-            if op[0] == '0':
-                p2 = codes[codes[index + 2]]
-            elif op[0] == '1':
-                p2 = codes[index + 2]
+            p1 = get_parameter_value(codes, index, 1, op[1])
+            p2 = get_parameter_value(codes, index, 2, op[0])
 
             if p1 < p2:
                 codes[codes[index + 3]] = 1
@@ -112,16 +79,8 @@ def run_codes(codes, interactive_mode=False, inputs=[], index=0):
             index += 4
         elif op.endswith('8'):
             op = op.zfill(4)
-
-            if op[1] == '0':
-                p1 = codes[codes[index + 1]]
-            elif op[1] == '1':
-                p1 = codes[index + 1]
-
-            if op[0] == '0':
-                p2 = codes[codes[index + 2]]
-            elif op[0] == '1':
-                p2 = codes[index + 2]
+            p1 = get_parameter_value(codes, index, 1, op[1])
+            p2 = get_parameter_value(codes, index, 2, op[0])
 
             if p1 == p2:
                 codes[codes[index + 3]] = 1
